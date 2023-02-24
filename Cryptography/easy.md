@@ -21,3 +21,15 @@ ABCDEF{45C11_15_U53FUL}
 
 2023/2/23
 The `echo <hex value> | xxd -r -p` command in a terminal can be used to quickly convert hexadecimal values to their ASCII representation.
+
+`echo '41 42 43 54 46 7B 34 35 43 31 31 5F 31 35 5F 55 35 33 46 55 4C 7D' | xxd -r -p
+`
+but my termial output error,maybe 
+2023/2/24
+I don't install xss tools
+
+so I find a local tool net help me.
+[https://dmgs.dk/cryptii/]
+![cryptii](cryptii.png)
+
+
