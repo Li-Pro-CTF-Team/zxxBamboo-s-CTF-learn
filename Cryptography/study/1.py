@@ -21,12 +21,13 @@ def vigenere_cipher(text, key, encrypt=True):
     return ''.join(result)  # 使用 join() 方法将结果列表转换为字符串，并作为密文返回
 
 
-plaintext = "please keep this message in secret."  # 将要加密的明文消息分配给可变文本。
-key = "computer"  # 用于加密的密钥被分配给变量密钥。
+plaintext = "ATTACKATDAWN"  # 将要加密的明文消息分配给可变文本。
+key = "LEMONLEMONLE"  # 用于加密的密钥被分配给变量密钥。
 ciphertext = vigenere_cipher(plaintext, key)  # 密文被分配给密文变量。
-print("Ciphertext:", ciphertext)  # 使用 print() 函数将密文打印到控制台。
+print("Ciphertext:", ciphertext.upper())  # 使用 print() 函数将密文打印到控制台。
 
 # 如果字符是字母，则通过将模运算符 (%) 与 key_length 变量一起使用，从 key_as_int 列表中获取移位值。 如果 encrypt 为 False，则移位值取反。
 # 新字符是通过将移位值与原始字符的 ASCII 值相加，减去小写字母 'a' 的 ASCII 值，将结果取模 26 并在必要时环绕到字母表的开头，然后 添加字母“a”的 ASCII 值。 此计算是使用 ord() 和 chr() 函数执行的。
+
 
 
