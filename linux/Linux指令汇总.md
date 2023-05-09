@@ -1,5 +1,16 @@
 [TOC]
 # Linux用过指令汇总
+## 基础指令
+### 权限查看
+- 查看文件权限
+``
+setfacl -x u:user_name xxx.txt
+getfacl xxx.txt
+``
+- 给文件增加x权限
+``
+chmod -x xxx.txt
+``
 ## 常见工具
 ### gcc
 - 将 getbuf.s 文件汇编成二进制可执行文件 getbuf
