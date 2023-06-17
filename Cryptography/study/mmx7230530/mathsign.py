@@ -1,31 +1,62 @@
-# 导入必要的库
+import random
+from gmpy2 import invert
 
-# 已知参数
-p = 1553  # 素数 p
-g = 3  # 模 p 的原根 g
-m = 541  # 明文 m
-x = 423  # 私钥 x
-y = 1304  # 公钥 y
-h = 121  # 随机数 h
-k = 133  # 随机数 k
-a = 599  # 随机数 a
 
-# Alice 随机选取 h，计算 B，然后发送给 Bob
-B = pow(g, h, p)
+def gcd(m, n):
+    if n == 0:
+        return x
+    else:
+        return gcd(n, m % n)
 
-# Bob 随机选取 k，计算 r，然后发送给 Alice
-r_prime = pow(B, k, p)
 
-# Alice 计算 r，然后计算 m'
-r = pow(r_prime, a, p)
-m_prime = m * pow(r, -1, p - 1) % (p - 1)
+def husu(n):  # 随机选取与n互素的数
+    m = random.randint(0, n)
+    if gcd(m, n) == 1:
+        return m
+    return husu(n)
 
-# Bob 根据 m' 计算 s'
-s_prime = pow(k, -1, p - 1) * (m_prime * x - r_prime) % (p - 1)
 
-# Alice 根据 s' 计算 s
-s = pow(a, -1, p - 1) * pow(h, -1, p - 1) * s_prime % (p - 1)
-
-# 验证签名是否有效
-is_valid = pow(g, s, p) == pow(y, m, p) * pow(r_prime, s, p) % p
-print('签名有效' if is_valid else '签名无效')
+p = 1553
+g = 3
+m = 541
+x = 423
+# h = husu(p-1)
+h = 121
+b = pow(g, h, p)  # β
+# k = husu(p-1)
+k = 133
+r2 = pow(b, k, p)  # r'
+# a = husu(p-1)
+a = 599  # α
+r = pow(r2, a, p)
+r_ni = invert(r, p - 1)  # 求逆
+m2 = (m * r2 * r_ni) % (p - 1)  # m'
+k_ni = invert(k, p - 1)
+s2 = (k_ni * (m2 * x - r2)) % (p - 1)  # s'
+a_ni = invert(a, p - 1)
+h_ni = invert(h, p - 1)
+r2_ni = invert(r2, p - 1)
+s = (a_ni * h_ni * r * r2_ni * s2) % (p - 1)
+y = pow(g, x, p)
+t1 = pow(y, m, p)
+t2 = (pow(r, s) * pow(g, r)) % p
+if t1 == t2:
+    print(t1, '=', t2)
+    print("签名有效")
+else:
+    print(t1, '!=', t2)
+    print("签名无效")
+print("素数p =", p)
+print("模p本元g =", g)
+print("明文m =", m)
+print("私钥x =", x)
+print("公钥y =", y)
+print("随机数h =", h)
+print("β =", b)
+print("随机数k =", k)
+print("r′ =", r2)
+print("随机数α =", a)
+print("r =", r)
+print("m′ =", m2)
+print("s′ =", s2)
+print("s =", s)
